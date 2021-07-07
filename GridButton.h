@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QPushButton>
 #include <QThread>
+#include <iostream>
 
 //QTextStream out(stdout);
 /*This class is buttons in the main window acting as a 2D selectable
@@ -17,7 +18,11 @@ class GridButton : public QPushButton{
 
 public:
     GridButton(int X, int Y, QWidget *parent = nullptr);
-    ~GridButton();
+    ~GridButton(); 
+
+    void setColor();//setting the color of button based on how many clicks has occured
+    //void setSimulateAStarColor(); //setting the color of button while simulating A-Star
+    //void setSimulateLOSColor(); //setting the color of button while simulating LOS
 
     GridButton* parent_{nullptr}; //link to the parent of the button
     GridButton* children_{nullptr}; //link to the children of the button
