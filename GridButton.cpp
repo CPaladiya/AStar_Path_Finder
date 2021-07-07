@@ -7,7 +7,7 @@ GridButton::GridButton(int X, int Y, QWidget *parent)
     const QSize FixedButtonSize = QSize(20,20); //fixing the button size
     ButtonVar_ = new QPushButton();
     ButtonVar_->setFixedSize(FixedButtonSize);
-    connect(ButtonVar_, &GridButton::clicked, this, &GridButton::setColor);
+    connect(ButtonVar_, &QPushButton::clicked, this, &GridButton::setColor);
 }
 
 GridButton::~GridButton(){
@@ -21,6 +21,7 @@ void GridButton::setColor(){
     }
     else if(UseCount_==0){
         ButtonVar_->setStyleSheet("background-color : green");
+        std::cout<<"Green called"<<std::endl;
         UseCount_++;
     }
     else if(UseCount_==1){
