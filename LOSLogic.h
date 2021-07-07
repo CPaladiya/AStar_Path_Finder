@@ -8,7 +8,6 @@
 #include <QtWidgets/QPushButton>
 #include <vector>
 #include <QTextStream>
-#include <QLabel>
 #include <iostream>
 #include <QTextStream>
 
@@ -25,15 +24,20 @@ class Window : public QWidget{
 public:
 
     Window(QWidget *parent = nullptr); //constructor
-    ~Window();
+    ~Window(){};
 
-    vector<vector<GridButton*>> 2DButGrid; //adding GridButton instances here
+    vector<vector<GridButton*>> TwoDButGrid; //adding GridButton instances here
 
 
     //---------------All the required buttons-----------------------//
-    QPushButton* AStarButton_; //Button to simulate A-Star Algorithm
-    QPushButton* LOSButton_; //Button to simulate LOS Algorithm
-    QPushButton* ResetButton_; //Button to reset the system
+    QPushButton* AStarButton_{nullptr}; //Button to simulate A-Star Algorithm
+    QPushButton* LOSButton_{nullptr}; //Button to simulate LOS Algorithm
+    QPushButton* ResetButton_{nullptr}; //Button to reset the system
+    
+
+    //---------------All the required QGroupBox-----------------------//
+    QGridLayout *MainWindowGrid{nullptr}; //main grid that will hold all the widgets
+
 
     //---------------Func to setup the window-----------------------//
     void LoadWindow();

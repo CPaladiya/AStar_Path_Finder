@@ -3,7 +3,6 @@
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QWidget>
-#include <QLabel>
 #include <QTextStream>
 #include <QPushButton>
 #include <QThread>
@@ -18,7 +17,7 @@ class GridButton : public QPushButton{
 
 public:
     GridButton(QWidget *parent = nullptr);
-    ~GridButton();
+    ~GridButton(){};
 
     GridButton* parent_{nullptr}; //link to the parent of the button
     GridButton* children_{nullptr}; //link to the children of the button
@@ -30,7 +29,5 @@ public:
     QPushButton* ButtonVar_{nullptr}; //Main button variable for this instance
     static int UseCount_; //The value storing, how many time the button has been pressed
 };
-
-int GridButton::UseCount_{0}; //defined the static variable button that will increase with every button press
 
 #endif

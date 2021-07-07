@@ -5,6 +5,7 @@
 TEMPLATE = app
 TARGET = 15_LOS_Path_Finder
 INCLUDEPATH += .
+QT += widgets
 QT += core gui
 
 # The following define makes your compiler warn you if you use any
@@ -19,5 +20,5 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-HEADERS += LOSLogic.h GridButtons.h
-SOURCES += main.cpp GridButtons.cpp LOSLogic.cpp
+HEADERS += LOSLogic.h GridButton.h
+SOURCES += main.cpp GridButton.cpp LOSLogic.cpp
