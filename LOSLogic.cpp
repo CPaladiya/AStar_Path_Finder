@@ -1,52 +1,70 @@
 #include "LOSLogic.h"
 
 Window::Window(QWidget *parent): QWidget(parent){
-    LoadWindow();
+    Load2DButtonGrid();
+    LoadSimulateButtons();
+    DrawMainWindow();
 }
 
-void Window::LoadWindow(){
-    
-    MainWindowGrid = new QGridLayout;
-
-    // -------------- adding 2D grid 200 buttons to 2DGrid box---------------//
-
-    QGroupBox *TwoDGridButtonBox = new QGroupBox;
-    QGridLayout *TwoDGridButtonGridLayout = new QGridLayout;
-
-    const QSize FixedButtonSize = QSize(20,20); //fixing the button size
-    //adding the many button to the layout
-    for(int i = 0; i<20 ; i++){
-        for(int j = 0 ; j<30; j++){
-            QPushButton *TempButton = new QPushButton();
-            TempButton->setFixedSize(FixedButtonSize); //fixing the button size before adding it
-            TwoDGridButtonGridLayout->addWidget(TempButton,i,j);
+Window::~Window(){
+    cout<<"Destructor called"<<endl;
+    delete(MainWindowGrid_);
+    delete(TwoDGridButtonGridLayout_);
+    delete(SimulateButtonGrid_);
+    delete(TwoDGridButtonBox_);
+    delete(SimulateButtonBox_);
+    for(int i = 0; i < raw_ ; i++){
+        for(int j = 0 ; j<clm_; j++){
+            delete(TwoDGridOfButtons_[i][j]);
         }
     }
-    TwoDGridButtonGridLayout->setSpacing(0);
-    TwoDGridButtonBox->setLayout(TwoDGridButtonGridLayout);
+}
 
-    // --------------- adding A-Star and LOS button to box below to 2D grid box-------------//
+// -------------- adding 2D grid 200 buttons to 2DGrid box---------------//
+void Window::Load2DButtonGrid(){
+    
+    TwoDGridButtonBox_ = new QGroupBox;
+    TwoDGridButtonGridLayout_ = new QGridLayout;
 
-    QGroupBox *SimulateButtonBox = new QGroupBox;
-    QGridLayout *SimulateButtonGrid = new QGridLayout;
+    //adding the many button to the layout
+    vector<GridButton*> TempRowVec;
+    for(int i = 0; i < raw_ ; i++){
+        for(int j = 0 ; j<clm_; j++){
+            GridButton* TempGridButtonObject = new GridButton(i,j);
+            TempRowVec.push_back(TempGridButtonObject);
+            TwoDGridButtonGridLayout_->addWidget(TempGridButtonObject->ButtonVar_,i,j);
+        } 
+        TwoDGridOfButtons_.push_back(TempRowVec);
+        TempRowVec.clear();
+    }
+    TwoDGridButtonGridLayout_->setSpacing(0);
+    TwoDGridButtonBox_->setLayout(TwoDGridButtonGridLayout_);
+}
+
+// --------------- adding A-Star and LOS button to box below to 2D grid box-------------//
+void Window::LoadSimulateButtons(){
+
+    SimulateButtonBox_ = new QGroupBox;
+    SimulateButtonGrid_ = new QGridLayout;
     LOSButton_ = new QPushButton("Simulate LOS");
     AStarButton_= new QPushButton("Simulate A-Star");
     ResetButton_= new QPushButton("Reset");
 
-    SimulateButtonGrid->addWidget(LOSButton_,0,1);
-    SimulateButtonGrid->addWidget(AStarButton_,0,0);
+    SimulateButtonGrid_->addWidget(LOSButton_,0,1);
+    SimulateButtonGrid_->addWidget(AStarButton_,0,0);
 
-    SimulateButtonBox->setLayout(SimulateButtonGrid);
+    SimulateButtonBox_->setLayout(SimulateButtonGrid_);
+}
+
+//----------------Adding both layout to its grid then adding grid to main layout or window ---------------//
+void Window::DrawMainWindow(){
+    MainWindowGrid_ = new QGridLayout;
 
     //-----------adding both layout to main window--------//
+    MainWindowGrid_->addWidget(TwoDGridButtonBox_,0,0,10,1);
+    MainWindowGrid_->addWidget(SimulateButtonBox_,10,0,1,1);
 
-    MainWindowGrid->addWidget(TwoDGridButtonBox,0,0,10,1);
-    MainWindowGrid->addWidget(SimulateButtonBox,10,0,1,1);
-
-    //----------Adding main window grid to QWidget--------//
-    //Setting the grid, its title and Size of the window
-    setLayout(MainWindowGrid); //Addimg main grid to the window
+    setLayout(MainWindowGrid_); //Addimg main grid to the window
     setWindowTitle(tr("LOS Algorithm"));
-    resize(100,200);
-
+    //resize(100,200);
 }

@@ -10,37 +10,45 @@
 #include <QTextStream>
 #include <iostream>
 #include <QTextStream>
+#include "GridButton.h"
 
 using namespace std;
 
 /*class definition of Window object, the main object that will own all the other class objects
 and also, will populate the main window grid with required elements*/
 
-class GridButton;
 class Window : public QWidget{
 
     Q_OBJECT;
 
+    int raw_{20};
+    int clm_{30};
+
 public:
 
     Window(QWidget *parent = nullptr); //constructor
-    ~Window(){};
+    ~Window();
 
-    vector<vector<GridButton*>> TwoDButGrid; //adding GridButton instances here
+    vector<vector<GridButton*>> TwoDGridOfButtons_; //adding GridButton instances here
 
+    //---------------All QGridLayout variables-----------------------//
+    QGridLayout* MainWindowGrid_{nullptr}; //main grid that will hold all the boxes and will be added to main window
+    QGridLayout* TwoDGridButtonGridLayout_{nullptr}; //Grid that will hold 2D grid buttons
+    QGridLayout* SimulateButtonGrid_{nullptr}; //Grid that will hold A-Star and LOS button
+
+    //---------------All QGroupBox variables-----------------------//
+    QGroupBox* TwoDGridButtonBox_{nullptr}; //will hold TwoDGridButtonGridLayout
+    QGroupBox* SimulateButtonBox_{nullptr}; //will hold SimulateButtonBox
 
     //---------------All the required buttons-----------------------//
     QPushButton* AStarButton_{nullptr}; //Button to simulate A-Star Algorithm
     QPushButton* LOSButton_{nullptr}; //Button to simulate LOS Algorithm
     QPushButton* ResetButton_{nullptr}; //Button to reset the system
     
-
-    //---------------All the required QGroupBox-----------------------//
-    QGridLayout *MainWindowGrid{nullptr}; //main grid that will hold all the widgets
-
-
     //---------------Func to setup the window-----------------------//
-    void LoadWindow();
+    void Load2DButtonGrid();
+    void LoadSimulateButtons();
+    void DrawMainWindow();
     void HideResetButton_();
     void ShowResetButton_();
 };
