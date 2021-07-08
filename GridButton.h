@@ -8,6 +8,8 @@
 #include <QThread>
 #include <iostream>
 
+using namespace std;
+
 //QTextStream out(stdout);
 /*This class is buttons in the main window acting as a 2D selectable
 pixel grid*/
@@ -16,11 +18,16 @@ class GridButton : public QPushButton{
     
     Q_OBJECT
 
+protected:
+
+    void enterEvent(QEvent* e);
+
 public:
     GridButton(int X, int Y, QWidget *parent = nullptr);
     ~GridButton(); 
 
-    void setColor();//setting the color of button based on how many clicks has occured
+    void setStartNFinishColor();//setting the color of button based on how many clicks has occured
+    void setRoadBlockColor(); //setting the road block coler while hovering
     //void setSimulateAStarColor(); //setting the color of button while simulating A-Star
     //void setSimulateLOSColor(); //setting the color of button while simulating LOS
 
@@ -33,6 +40,10 @@ public:
     int y_GridPos_; //y position of the button within 2D grid
     QPushButton* ButtonVar_{nullptr}; //Main button variable for this instance
     static int UseCount_; //The value storing, how many time the button has been pressed
+
+Q_SIGNALS:
+    void hovered(); //signal to the connection of button when mouse hover over button
+
 };
 
 #endif
