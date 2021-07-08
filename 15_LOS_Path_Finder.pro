@@ -20,5 +20,5 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-HEADERS += LOSLogic.h GridButton.h
-SOURCES += main.cpp GridButton.cpp LOSLogic.cpp
+HEADERS += Window.h GridButton.h
+SOURCES += main.cpp GridButton.cpp Window.cpp

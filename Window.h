@@ -1,5 +1,5 @@
-#ifndef LOSLOGIC_H
-#define LOSLOGIC_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QWidget>
