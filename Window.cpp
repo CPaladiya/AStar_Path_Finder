@@ -101,6 +101,7 @@ void Window::RunLoopToDrawBlocks_(){
             for(int j = y_min; j<=y_max; j++){
                 if(TwoDGridOfButtons_[i][j]->IsItStart_== false && TwoDGridOfButtons_[i][j]->IsItDestiny_==false){
                     TwoDGridOfButtons_[i][j]->ButtonVar_->setStyleSheet("background-color : black");
+                    TwoDGridOfButtons_[i][j]->IsItBlock_=true;
                     GridButton::totalRoadBlockCount_++;
                 }
                 
