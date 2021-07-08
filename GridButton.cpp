@@ -43,6 +43,7 @@ void GridButton::setColorAndGetCoOrd(){
         ClickUseCount_++;
     }
     else if(ClickUseCount_==0){
+        //cout<<"we are reachinghere"<<endl;
         ButtonVar_->setStyleSheet("background-color : green");
         ItsAStart_ = true;
         ItsHome_ = true;

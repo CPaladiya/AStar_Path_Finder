@@ -19,6 +19,8 @@ using namespace std;
 /*class definition of Window object, the main object that will own all the other class objects
 and also, will populate the main window grid with required elements*/
 
+ //adding GridButton instances here
+
 class Window : public QWidget{
 
     Q_OBJECT;
@@ -33,8 +35,9 @@ public:
 
     //we will use this array to calculate cost to neighbors and to add neighbors
     const float NeighborAddress[8][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {1, 1}, {-1, 1}, {-1, -1}, {1, -1}};
-    vector<vector<int>> OpenNodes_; //vector to store open nodes 
-    vector<vector<GridButton*>> TwoDGridOfButtons_; //adding GridButton instances here
+    vector<vector<float>> OpenNodes_; //vector to store open nodes 
+    vector<vector<GridButton*>> OpenGridButtons_; //vector to store open buttons
+    vector<vector<GridButton*>> TwoDGridOfButtons_;
 
     //---------------All QGridLayout variables-----------------------//
     QGridLayout* MainWindowGrid_{nullptr}; //main grid that will hold all the boxes and will be added to main window
@@ -62,9 +65,8 @@ public:
     //---------------A-Star search Func------------------//
     float Distance(int X1, int Y1, int X2, int Y2); //calculating distance between two points
     void AStarSearch();//A-star search simulation
-    void AddNeighbors(vector<vector<int>> &OpenNodes, const vector<int> &Node, const vector<int> &Finish); //Adding neighbours of node to opennodes
-    void SortOpenNodes(); //Sorting the nodes from highest to lowest
-    bool Compare(const vector<int> FirstNode, const vector<int> SecondNode);
+    void AddNeighbors(vector<vector<float>> &OpenNodes, const vector<float> &Node, const vector<float> &Finish); //Adding neighbours of node to opennodes
+    void SortOpenNodes(vector<vector<float>> &OpenNodes); //Sorting the nodes from highest to lowest
     void RegeneratePath(); //Display path
 
 };

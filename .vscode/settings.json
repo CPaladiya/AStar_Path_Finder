@@ -3,6 +3,7 @@
     "files.associations": {
         "qapplication": "cpp",
         "ostream": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "iostream": "cpp"
     }
 }

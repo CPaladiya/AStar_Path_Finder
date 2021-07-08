@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "AStarLogic.cpp"
 
 Window::Window(QWidget *parent): QWidget(parent){
     Load2DButtonGrid();
