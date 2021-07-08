@@ -3,7 +3,6 @@
 //----------------less than operator overloaded for comparision-------//
 
 bool compare(const vector<float> FirstNode, const vector<float> SecondNode){
-    //cout<< FirstNode[2] << " "<<SecondNode[2];
     return FirstNode[2]>SecondNode[2];
 }
 
@@ -13,7 +12,7 @@ void Window::SortOpenNodes(vector<vector<float>> &OpenNodes){
 
 //calculating hueristic distance between two points
 float Window::Distance(int X1, int Y1, int X2, int Y2){
-    cout<< sqrt((float)pow(abs(X1-Y1),2) + (float)pow(abs(X2-Y2),2))<<endl;
+    //cout<< sqrt((float)pow(abs(X1-Y1),2) + (float)pow(abs(X2-Y2),2))<<endl;
     return sqrt((float)pow(abs(X1-Y1),2) + (float)pow(abs(X2-Y2),2));
 }
 
@@ -23,7 +22,6 @@ void Window::AddNeighbors(vector<vector<float>> &openGrid, const vector<float> &
     
     //adding all eight neigbors from the NeighborAddress array one by one
     for(int i=0; i<8; i++){
-        cout<<"loop running"<<endl;
         int Xn = x + NeighborAddress[i][0];
         int Yn = y + NeighborAddress[i][1];
         //now checking if the new Xn and Yn adress is valid and the grid does not have road block over there
@@ -32,6 +30,7 @@ void Window::AddNeighbors(vector<vector<float>> &openGrid, const vector<float> &
         bool XnYnIsOpenRoad = !(TwoDGridOfButtons_[Xn][Yn]->ItsABlock_);
         bool XnYnNotVisitedAlready = !(TwoDGridOfButtons_[Xn][Yn]->ItsVisited_);
         if(XnISValid && YnISValid && XnYnIsOpenRoad && XnYnNotVisitedAlready){
+            cout<<Xn<<Yn;
             vector<float> temp{(float)Xn,(float)Yn};
             TwoDGridOfButtons_[Xn][Yn]->parent_ = {x,y};  //setting the new neighbor as children
             TwoDGridOfButtons_[Xn][Yn]->ItsVisited_ = true; //setting this new node as already visited
@@ -41,7 +40,7 @@ void Window::AddNeighbors(vector<vector<float>> &openGrid, const vector<float> &
             TwoDGridOfButtons_[Xn][Yn]->TotalDistance_ = TwoDGridOfButtons_[Xn][Yn]->DistFromStart_ + Distance(Xn,Finish[0],Yn,Finish[1]);
             temp.push_back(TwoDGridOfButtons_[Xn][Yn]->TotalDistance_);
             openGrid.push_back(temp);
-        } cout<<"loop ended"<<endl;
+        }
     }
 };
 
@@ -50,6 +49,7 @@ void Window::AStarSearch() {
     vector<float> FN{0,0}; 
     FN[0] = (float)GridButton::Start_[0]; //First node
     FN[1] = (float)GridButton::Start_[1]; 
+    cout<<"Start Point "<<FN[0]<<" "<<FN[1]<<endl;
     vector<float> LN{0,0};
     LN[0] = (float)GridButton::Finish_[0]; //Last node
     LN[1] = (float)GridButton::Finish_[1];
@@ -65,7 +65,6 @@ void Window::AStarSearch() {
         OpenNodes_.pop_back(); //removing that cell from the open vectors
         cout<<currentNode_[0] << " " <<LN[0]<<" " <<currentNode_[1]<<" " <<LN[1]<<endl;
         if((int)currentNode_[0]== (int)LN[0] && (int)currentNode_[1]==(int)LN[1]){
-            cout<<"we reached here"<<endl;
             RegeneratePath();
             break;
         }
