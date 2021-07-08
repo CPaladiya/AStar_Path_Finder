@@ -8,6 +8,7 @@
 #include <QThread>
 #include <iostream>
 #include <QMutex>
+#include <QWaitCondition>
 #include <QMutexLocker>
 
 using namespace std;
@@ -35,6 +36,7 @@ public:
     int y_GridPos_; //y position of the button within 2D grid
     QPushButton* ButtonVar_{nullptr}; //Main button variable for this instance
     QMutex mutex_;
+
     
     //all the static variables
     static int ClickUseCount_; //The value storing, how many time the button has been pressed
@@ -44,7 +46,6 @@ public:
     static int lastRoadBlock_YPos_;
     static bool drawRoadBlocks_;
     static int totalRoadBlockCount_;
-
 };
 
 #endif

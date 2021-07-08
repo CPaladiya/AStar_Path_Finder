@@ -30,6 +30,8 @@ public:
     Window(QWidget *parent = nullptr); //constructor
     ~Window();
 
+    friend class GridButton;
+
     vector<vector<GridButton*>> TwoDGridOfButtons_; //adding GridButton instances here
 
     //---------------All QGridLayout variables-----------------------//
@@ -52,8 +54,8 @@ public:
     void DrawMainWindow();
     void HideResetButton_();
     void ShowResetButton_();
-    void RunLoopToDrawBlocks_();
     void addDelay();
+    void RunLoopToDrawBlocks_();
 
 };
 

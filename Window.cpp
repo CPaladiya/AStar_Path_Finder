@@ -1,6 +1,5 @@
 #include "Window.h"
 
-
 Window::Window(QWidget *parent): QWidget(parent){
     Load2DButtonGrid();
     LoadSimulateButtons();
@@ -73,38 +72,49 @@ void Window::DrawMainWindow(){
 
 //---------------------------adding delay anywhere we need to avoid data race-----------------------//
 void Window::addDelay(){
-    QTime dieTime= QTime::currentTime().addMSecs(100);
+    QTime dieTime= QTime::currentTime().addMSecs(50);
     while (QTime::currentTime() < dieTime)
-        {QCoreApplication::processEvents(QEventLoop::AllEvents, 100);};
+        {QCoreApplication::processEvents(QEventLoop::AllEvents, 50);};
 }
 
 //-------------------------Drawing road blocks between two selected buttons---------------------------//
+// This function will draw blocks between two selected points and make sure that it does not increase
+//beyond total block number of 100
 void Window::RunLoopToDrawBlocks_(){
-    //addDelay();
+    addDelay();//add delay to make sure that the static variable drawRoadBlocks_ is available
+    //first checking the permission to drawing road blocks is given
     if(GridButton::drawRoadBlocks_ == true){
         cout<<GridButton::ClickUseCount_<<endl;
-        GridButton::drawRoadBlocks_=false;
+        GridButton::drawRoadBlocks_=false; //setting the permission to false for the next use
+        //fetching the starting and diagonal ending point of the road block series we want to draw
         int x1 = GridButton::firtsRoadBlock_XPos_;
         int y1 = GridButton::firtsRoadBlock_YPos_;
         int x2 = GridButton::lastRoadBlock_XPos_;
         int y2 = GridButton::lastRoadBlock_YPos_;
+        
+        //making sure loop is running from smaller coordinates to bigger
         int x_max = x1 > x2 ? x1 : x2 ;
         int y_max = y1 > y2 ? y1 : y2 ;
         int x_min = x1 < x2 ? x1 : x2 ;
         int y_min = y1 < y2 ? y1 : y2 ;
 
-        for(int i = x_min; i<=x_max; i++){
-            if(GridButton::totalRoadBlockCount_>99){
+        //checking if we have not clicked on the same button twice, in that case we wont run the loop
+        if(x_max != x_min && y_max != y_min){
+            for(int i = x_min; i<=x_max; i++){
+                //checking to see if total road block buttons has note gone more than 100 (0 to 99) here
+                //if that's the case we will just get out of the loop
+                if(GridButton::totalRoadBlockCount_>99){
                     cout << "You can not select more than 100 road blocks"<<endl;
                     break;
                 }
-            for(int j = y_min; j<=y_max; j++){
-                if(TwoDGridOfButtons_[i][j]->IsItStart_== false && TwoDGridOfButtons_[i][j]->IsItDestiny_==false){
-                    TwoDGridOfButtons_[i][j]->ButtonVar_->setStyleSheet("background-color : black");
-                    TwoDGridOfButtons_[i][j]->IsItBlock_=true;
-                    GridButton::totalRoadBlockCount_++;
+                for(int j = y_min; j<=y_max; j++){
+                    //making sure that we are not overriding the button which are already asigned as start and finish
+                    if(TwoDGridOfButtons_[i][j]->IsItStart_== false && TwoDGridOfButtons_[i][j]->IsItDestiny_==false){
+                        TwoDGridOfButtons_[i][j]->ButtonVar_->setStyleSheet("background-color : black"); //setting the black background
+                        TwoDGridOfButtons_[i][j]->IsItBlock_=true; //setting that button has block
+                        GridButton::totalRoadBlockCount_++; //increasing the road block count
+                    }    
                 }
-                
             }
         }
     }
