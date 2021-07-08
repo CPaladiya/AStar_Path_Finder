@@ -6,7 +6,7 @@ TEMPLATE = app
 TARGET = 15_LOS_Path_Finder
 INCLUDEPATH += .
 QT += widgets
-QT += core gui
+QT += core
 
 # The following define makes your compiler warn you if you use any
 # feature of Qt which has been marked as deprecated (the exact warnings

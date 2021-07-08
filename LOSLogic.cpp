@@ -33,6 +33,7 @@ void Window::Load2DButtonGrid(){
             GridButton* TempGridButtonObject = new GridButton(i,j);
             TempRowVec.push_back(TempGridButtonObject);
             TwoDGridButtonGridLayout_->addWidget(TempGridButtonObject->ButtonVar_,i,j);
+            connect(TempGridButtonObject->ButtonVar_,&QPushButton::clicked,this,&Window::RunLoopToDrawBlocks_);
         } 
         TwoDGridOfButtons_.push_back(TempRowVec);
         TempRowVec.clear();
@@ -67,4 +68,20 @@ void Window::DrawMainWindow(){
     setLayout(MainWindowGrid_); //Addimg main grid to the window
     setWindowTitle(tr("LOS Algorithm"));
     //resize(100,200);
+}
+
+void Window::addDelay(){
+    QTime dieTime= QTime::currentTime().addMSecs(100);
+    while (QTime::currentTime() < dieTime)
+        {QCoreApplication::processEvents(QEventLoop::AllEvents, 100);};
+}
+
+void Window::RunLoopToDrawBlocks_(){
+    addDelay();
+    if(GridButton::drawRoadBlocks_ == true){
+        cout<<"its working"<<endl;
+        cout<<GridButton::UseCount_<<endl;
+        GridButton::drawRoadBlocks_=false;
+    }
+    
 }

@@ -7,6 +7,8 @@
 #include <QPushButton>
 #include <QThread>
 #include <iostream>
+#include <QMutex>
+#include <QMutexLocker>
 
 using namespace std;
 
@@ -18,18 +20,11 @@ class GridButton : public QPushButton{
     
     Q_OBJECT
 
-protected:
-
-    void enterEvent(QEvent* e);
-
 public:
     GridButton(int X, int Y, QWidget *parent = nullptr);
     ~GridButton(); 
 
-    void setStartNFinishColor();//setting the color of button based on how many clicks has occured
-    void setRoadBlockColor(); //setting the road block coler while hovering
-    //void setSimulateAStarColor(); //setting the color of button while simulating A-Star
-    //void setSimulateLOSColor(); //setting the color of button while simulating LOS
+    void setColor();//setting the color of button based on how many clicks has occured
 
     GridButton* parent_{nullptr}; //link to the parent of the button
     GridButton* children_{nullptr}; //link to the children of the button
@@ -39,10 +34,15 @@ public:
     int x_GridPos_; //x position of the button within 2D grid
     int y_GridPos_; //y position of the button within 2D grid
     QPushButton* ButtonVar_{nullptr}; //Main button variable for this instance
+    QMutex mutex_;
+    
+    //all the static variables
     static int UseCount_; //The value storing, how many time the button has been pressed
-
-Q_SIGNALS:
-    void hovered(); //signal to the connection of button when mouse hover over button
+    static int firtsRoadBlock_XPos_;
+    static int firtsRoadBlock_YPos_;
+    static int lastRoadBlock_XPos_;
+    static int lastRoadBlock_YPos_;
+    static bool drawRoadBlocks_;
 
 };
 

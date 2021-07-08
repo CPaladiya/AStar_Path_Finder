@@ -10,6 +10,7 @@
 #include <QTextStream>
 #include <iostream>
 #include <QTextStream>
+#include <QTime>
 #include "GridButton.h"
 
 using namespace std;
@@ -51,6 +52,8 @@ public:
     void DrawMainWindow();
     void HideResetButton_();
     void ShowResetButton_();
+    void RunLoopToDrawBlocks_();
+    void addDelay();
 };
 
 #endif

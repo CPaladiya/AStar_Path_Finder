@@ -1,27 +1,40 @@
 #include "GridButton.h"
 
+//-----------static variables and function-----------------//
 int GridButton::UseCount_{0}; //defined the static variable button that will increase with every button press
+int GridButton::firtsRoadBlock_XPos_{0};
+int GridButton::firtsRoadBlock_YPos_{0};
+int GridButton::lastRoadBlock_XPos_{0};
+int GridButton::lastRoadBlock_YPos_{0};
+bool GridButton::drawRoadBlocks_{false};
+
+//-----------class methods---------------------------//
 
 GridButton::GridButton(int X, int Y, QWidget *parent)
             : QPushButton(parent), x_GridPos_(X), y_GridPos_(Y){
-    this->setMouseTracking(true); //setting the mouse tracking true to enable hover event
     const QSize FixedButtonSize = QSize(20,20); //fixing the button size
     ButtonVar_ = new QPushButton();
     ButtonVar_->setFixedSize(FixedButtonSize);
-    connect(ButtonVar_, &QPushButton::clicked, this, &GridButton::setStartNFinishColor);
+    connect(ButtonVar_, &QPushButton::clicked, this, &GridButton::setColor);
 }
 
 GridButton::~GridButton(){
 }
 
-void GridButton::setStartNFinishColor(){
-    
-    if(UseCount_>1 && UseCount_<100 && UseCount_%2==0){
-        connect(ButtonVar_, SIGNAL(theSignal(GridButton::hovered)), this, SIGNAL(theSignal(GridButton::setRoadBlockColor)));
-        UseCount_++; cout<<UseCount_<<endl;
+void GridButton::setColor(){
+   
+    if(UseCount_>1 && UseCount_%2==0){
+        ButtonVar_->setStyleSheet("background-color : black");
+        firtsRoadBlock_XPos_ = x_GridPos_;
+        firtsRoadBlock_YPos_ = y_GridPos_;
+        UseCount_++;
     }
-    else if(UseCount_>1 && UseCount_<100 && UseCount_%2==1){
-        disconnect(ButtonVar_, SIGNAL(theSignal(GridButton::hovered)));
+    else if(UseCount_>1 && UseCount_%2==1){
+        QMutexLocker locker_(&mutex_);
+        ButtonVar_->setStyleSheet("background-color : black");
+        lastRoadBlock_XPos_ = x_GridPos_;
+        lastRoadBlock_YPos_ = y_GridPos_;
+        drawRoadBlocks_ = true;
         UseCount_++;
     }
     else if(UseCount_==0){
@@ -35,17 +48,4 @@ void GridButton::setStartNFinishColor(){
     else {
         std::cout << "You can not add more than 100 Road Blocks!" <<std::endl;
     }
-}
-
-void GridButton::setRoadBlockColor(){
-    if(UseCount_>1 && UseCount_ %2==0){
-        ButtonVar_->setStyleSheet("background-color : black");
-        cout<<"Hover called"<<endl;
-        UseCount_++;
-    }
-}
-
-void GridButton::enterEvent(QEvent *e){
-    Q_EMIT hovered();
-    QWidget::enterEvent(e); //forwarding the event
 }
