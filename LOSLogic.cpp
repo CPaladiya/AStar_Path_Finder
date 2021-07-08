@@ -1,5 +1,6 @@
 #include "LOSLogic.h"
 
+
 Window::Window(QWidget *parent): QWidget(parent){
     Load2DButtonGrid();
     LoadSimulateButtons();
@@ -79,9 +80,9 @@ void Window::addDelay(){
 
 //-------------------------Drawing road blocks between two selected buttons---------------------------//
 void Window::RunLoopToDrawBlocks_(){
-    addDelay();
+    //addDelay();
     if(GridButton::drawRoadBlocks_ == true){
-        cout<<GridButton::UseCount_<<endl;
+        cout<<GridButton::ClickUseCount_<<endl;
         GridButton::drawRoadBlocks_=false;
         int x1 = GridButton::firtsRoadBlock_XPos_;
         int y1 = GridButton::firtsRoadBlock_YPos_;
@@ -93,9 +94,14 @@ void Window::RunLoopToDrawBlocks_(){
         int y_min = y1 < y2 ? y1 : y2 ;
 
         for(int i = x_min; i<=x_max; i++){
+            if(GridButton::totalRoadBlockCount_>99){
+                    cout << "You can not select more than 100 road blocks"<<endl;
+                    break;
+                }
             for(int j = y_min; j<=y_max; j++){
                 if(TwoDGridOfButtons_[i][j]->IsItStart_== false && TwoDGridOfButtons_[i][j]->IsItDestiny_==false){
                     TwoDGridOfButtons_[i][j]->ButtonVar_->setStyleSheet("background-color : black");
+                    GridButton::totalRoadBlockCount_++;
                 }
                 
             }

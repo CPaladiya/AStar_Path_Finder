@@ -37,12 +37,13 @@ public:
     QMutex mutex_;
     
     //all the static variables
-    static int UseCount_; //The value storing, how many time the button has been pressed
+    static int ClickUseCount_; //The value storing, how many time the button has been pressed
     static int firtsRoadBlock_XPos_;
     static int firtsRoadBlock_YPos_;
     static int lastRoadBlock_XPos_;
     static int lastRoadBlock_YPos_;
     static bool drawRoadBlocks_;
+    static int totalRoadBlockCount_;
 
 };
 
