@@ -8,8 +8,8 @@ int GridButton::lastRoadBlock_XPos_{0};
 int GridButton::lastRoadBlock_YPos_{0};
 bool GridButton::drawRoadBlocks_{false};
 int GridButton::totalRoadBlockCount_{0};
-vector<int> GridButton::Start_;
-vector<int> GridButton::Finish_;
+vector<int> GridButton::Start_{0,0};
+vector<int> GridButton::Finish_{0,0};
 
 //-----------class methods---------------------------//
 
@@ -43,7 +43,6 @@ void GridButton::setColorAndGetCoOrd(){
         ClickUseCount_++;
     }
     else if(ClickUseCount_==0){
-        //cout<<"we are reachinghere"<<endl;
         ButtonVar_->setStyleSheet("background-color : green");
         ItsAStart_ = true;
         ItsHome_ = true;

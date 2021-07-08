@@ -62,13 +62,13 @@ public:
     void addDelay();
     void RunLoopToDrawBlocks_();
 
+
     //---------------A-Star search Func------------------//
     float Distance(int X1, int Y1, int X2, int Y2); //calculating distance between two points
     void AStarSearch();//A-star search simulation
     void AddNeighbors(vector<vector<float>> &OpenNodes, const vector<float> &Node, const vector<float> &Finish); //Adding neighbours of node to opennodes
     void SortOpenNodes(vector<vector<float>> &OpenNodes); //Sorting the nodes from highest to lowest
-    void RegeneratePath(); //Display path
-
+    void RegeneratePath(); //Display path 
 };
 
 #endif

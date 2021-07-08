@@ -4,6 +4,7 @@
         "qapplication": "cpp",
         "ostream": "cpp",
         "cmath": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "qwidget": "cpp"
     }
 }
