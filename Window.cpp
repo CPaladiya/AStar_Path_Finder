@@ -4,6 +4,7 @@ Window::Window(QWidget *parent): QWidget(parent){
     Load2DButtonGrid();
     LoadSimulateButtons();
     DrawMainWindow();
+    connect(AStarButton_,&QPushButton::clicked,this,&Window::AStarSearch);
 }
 
 Window::~Window(){
@@ -109,9 +110,9 @@ void Window::RunLoopToDrawBlocks_(){
                 }
                 for(int j = y_min; j<=y_max; j++){
                     //making sure that we are not overriding the button which are already asigned as start and finish
-                    if(TwoDGridOfButtons_[i][j]->IsItStart_== false && TwoDGridOfButtons_[i][j]->IsItDestiny_==false){
+                    if(TwoDGridOfButtons_[i][j]->ItsAStart_== false && TwoDGridOfButtons_[i][j]->ItsAFinish_==false){
                         TwoDGridOfButtons_[i][j]->ButtonVar_->setStyleSheet("background-color : black"); //setting the black background
-                        TwoDGridOfButtons_[i][j]->IsItBlock_=true; //setting that button has block
+                        TwoDGridOfButtons_[i][j]->ItsABlock_=true; //setting that button has block
                         GridButton::totalRoadBlockCount_++; //increasing the road block count
                     }    
                 }

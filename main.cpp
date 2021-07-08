@@ -1,5 +1,5 @@
 #include <QtWidgets/QApplication>
-#include "LOSLogic.h"
+#include "Window.h"
 
 //This is the main file that starts the instance of window. It contains members of all the other class
 

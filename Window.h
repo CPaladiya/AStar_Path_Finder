@@ -11,6 +11,7 @@
 #include <iostream>
 #include <QTextStream>
 #include <QTime>
+#include <cmath>
 #include "GridButton.h"
 
 using namespace std;
@@ -30,8 +31,9 @@ public:
     Window(QWidget *parent = nullptr); //constructor
     ~Window();
 
-    friend class GridButton;
-
+    //we will use this array to calculate cost to neighbors and to add neighbors
+    const float NeighborAddress[8][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {1, 1}, {-1, 1}, {-1, -1}, {1, -1}};
+    vector<vector<int>> OpenNodes_; //vector to store open nodes 
     vector<vector<GridButton*>> TwoDGridOfButtons_; //adding GridButton instances here
 
     //---------------All QGridLayout variables-----------------------//
@@ -48,7 +50,7 @@ public:
     QPushButton* LOSButton_{nullptr}; //Button to simulate LOS Algorithm
     QPushButton* ResetButton_{nullptr}; //Button to reset the system
     
-    //---------------Func to setup the window-----------------------//
+    //---------------Func to setup the window and buttons-----------------------//
     void Load2DButtonGrid();
     void LoadSimulateButtons();
     void DrawMainWindow();
@@ -56,6 +58,14 @@ public:
     void ShowResetButton_();
     void addDelay();
     void RunLoopToDrawBlocks_();
+
+    //---------------A-Star search Func------------------//
+    float Distance(int X1, int Y1, int X2, int Y2); //calculating distance between two points
+    void AStarSearch();//A-star search simulation
+    void AddNeighbors(vector<vector<int>> &OpenNodes, const vector<int> &Node, const vector<int> &Finish); //Adding neighbours of node to opennodes
+    void SortOpenNodes(); //Sorting the nodes from highest to lowest
+    bool Compare(const vector<int> FirstNode, const vector<int> SecondNode);
+    void RegeneratePath(); //Display path
 
 };
 
