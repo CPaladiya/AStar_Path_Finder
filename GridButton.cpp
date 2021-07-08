@@ -39,10 +39,12 @@ void GridButton::setColor(){
     }
     else if(UseCount_==0){
         ButtonVar_->setStyleSheet("background-color : green");
+        IsItStart_ = true;
         UseCount_++;
     }
     else if(UseCount_==1){
         ButtonVar_->setStyleSheet("background-color : red");
+        IsItDestiny_=true;
         UseCount_++;
     }
     else {

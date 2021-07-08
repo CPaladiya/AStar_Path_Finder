@@ -70,18 +70,35 @@ void Window::DrawMainWindow(){
     //resize(100,200);
 }
 
+//---------------------------adding delay anywhere we need to avoid data race-----------------------//
 void Window::addDelay(){
     QTime dieTime= QTime::currentTime().addMSecs(100);
     while (QTime::currentTime() < dieTime)
         {QCoreApplication::processEvents(QEventLoop::AllEvents, 100);};
 }
 
+//-------------------------Drawing road blocks between two selected buttons---------------------------//
 void Window::RunLoopToDrawBlocks_(){
     addDelay();
     if(GridButton::drawRoadBlocks_ == true){
-        cout<<"its working"<<endl;
         cout<<GridButton::UseCount_<<endl;
         GridButton::drawRoadBlocks_=false;
+        int x1 = GridButton::firtsRoadBlock_XPos_;
+        int y1 = GridButton::firtsRoadBlock_YPos_;
+        int x2 = GridButton::lastRoadBlock_XPos_;
+        int y2 = GridButton::lastRoadBlock_YPos_;
+        int x_max = x1 > x2 ? x1 : x2 ;
+        int y_max = y1 > y2 ? y1 : y2 ;
+        int x_min = x1 < x2 ? x1 : x2 ;
+        int y_min = y1 < y2 ? y1 : y2 ;
+
+        for(int i = x_min; i<=x_max; i++){
+            for(int j = y_min; j<=y_max; j++){
+                if(TwoDGridOfButtons_[i][j]->IsItStart_== false && TwoDGridOfButtons_[i][j]->IsItDestiny_==false){
+                    TwoDGridOfButtons_[i][j]->ButtonVar_->setStyleSheet("background-color : black");
+                }
+                
+            }
+        }
     }
-    
 }
