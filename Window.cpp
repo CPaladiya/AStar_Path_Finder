@@ -157,4 +157,6 @@ void Window::ResetEverything(){
 
     //clear all the Window object variables
     OpenNodes_.clear();
+    ForwardResultVector_.clear();
+    ReverseResultVector_.clear();
 }

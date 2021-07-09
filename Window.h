@@ -36,6 +36,8 @@ public:
     const float NeighborAddress[8][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {1, 1}, {-1, 1}, {-1, -1}, {1, -1}};
     vector<vector<float>> OpenNodes_; //vector to store open nodes's indices 
     vector<vector<GridButton*>> TwoDGridOfButtons_; //vector to store pointer GridButton instances for 2D grid
+    vector<vector<int>> ForwardResultVector_; //vector to store result in forward direction
+    vector<vector<int>> ReverseResultVector_; //vector to store result in reverse direction
 
     //---------------All QGridLayout variables-----------------------//
     QGridLayout* MainWindowGrid_{nullptr}; //main grid that will hold all the boxes and will be added to main window

@@ -86,19 +86,33 @@ void Window::AStarSearch() {
 }
 
 void Window::RegeneratePath(){
-    vector<int> Cn {GridButton::Finish_[0],GridButton::Finish_[1]}; //Current Node
-    while(true){
 
-        int ParentX = TwoDGridOfButtons_[Cn[0]][Cn[1]]->parent_[0];
-        int ParentY = TwoDGridOfButtons_[Cn[0]][Cn[1]]->parent_[1];
-        if(TwoDGridOfButtons_[ParentX][ParentY]->ItsHome_==true){
+    //First we will generate Reverse result vector by first starting with finish and
+    //we will keep fetching parent untill we reach home
+
+    vector<int> Cn {GridButton::Finish_[0],GridButton::Finish_[1]}; //Current Node
+    ReverseResultVector_.push_back(Cn); //adding finish node to reverse vector
+    while(true){
+        int ParentX = TwoDGridOfButtons_[Cn[0]][Cn[1]]->parent_[0]; //Fetching parent x index
+        int ParentY = TwoDGridOfButtons_[Cn[0]][Cn[1]]->parent_[1]; //Fetching parent y index
+        if(TwoDGridOfButtons_[ParentX][ParentY]->ItsHome_==true){ //Checking if the parent is not home/start node
             cout<<"reached regenration break"<<endl;
             break;
         }
-        addDelay(SimulationSpeed*1.5);
-        TwoDGridOfButtons_[ParentX][ParentY]->setFinalPathColor();
-        Cn[0] = ParentX;
+        ReverseResultVector_.push_back({ParentX,ParentY}); //adding result to reverse vector
+        Cn[0] = ParentX; //assigning parent node as next
         Cn[1] = ParentY;
+    }
+    ReverseResultVector_.push_back({GridButton::Finish_[0],GridButton::Finish_[1]}); //adding start node to reverse vector
+
+    //now we will use Reverse result vector to produce forward result vector
+    ForwardResultVector_ =  ReverseResultVector_;
+    reverse(ForwardResultVector_.begin(), ForwardResultVector_.end());
+
+    //next, we will simulate the Forward result vector to show the result on screen
+    for(int i=0; i<(int)ForwardResultVector_.size(); i++){
+        addDelay(SimulationSpeed);
+        TwoDGridOfButtons_[ForwardResultVector_[i][0]][ForwardResultVector_[i][1]]->setFinalPathColor();
     }
 }
 
