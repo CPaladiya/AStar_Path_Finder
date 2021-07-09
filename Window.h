@@ -65,6 +65,7 @@ public:
     void AddNeighbors(vector<vector<float>> &OpenNodes, const vector<float> &Node, const vector<float> &Finish); //Adding neighbours of node to opennodes
     void SortOpenNodes(vector<vector<float>> &OpenNodes); //Sorting the nodes from highest to lowest total distance = cost up untill now + hueristic distance
     void RegeneratePath(); //Regenerate path by going to parent of each node untill we reach start point
+    void ResetEverything(); //clearing the screen for new simulation
 };
 
 #endif

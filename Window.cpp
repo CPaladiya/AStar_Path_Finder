@@ -6,6 +6,7 @@ Window::Window(QWidget *parent): QWidget(parent){
     LoadSimulateButtons();
     DrawMainWindow();
     connect(AStarButton_,&QPushButton::clicked,this,&Window::AStarSearch);
+    connect(ResetButton_,&QPushButton::clicked,this,&Window::ResetEverything);
 }
 
 Window::~Window(){
@@ -15,6 +16,9 @@ Window::~Window(){
     delete(SimulateButtonGrid_);
     delete(TwoDGridButtonBox_);
     delete(SimulateButtonBox_);
+
+    //---------------All QGridLayout variables-----------------------//
+
     for(int i = 0; i < raw_ ; i++){
         for(int j = 0 ; j<clm_; j++){
             delete(TwoDGridOfButtons_[i][j]);
@@ -55,6 +59,7 @@ void Window::LoadSimulateButtons(){
 
     SimulateButtonGrid_->addWidget(LOSButton_,0,1);
     SimulateButtonGrid_->addWidget(AStarButton_,0,0);
+    SimulateButtonGrid_->addWidget(ResetButton_,0,3);
 
     SimulateButtonBox_->setLayout(SimulateButtonGrid_);
 }
@@ -120,4 +125,36 @@ void Window::RunLoopToDrawBlocks_(){
             }
         }
     }
+}
+
+//resetting the simulation screen
+void Window::ResetEverything(){
+    
+    //resetting all the GridButton Static variables
+    GridButton::ClickUseCount_=0;
+    GridButton::firtsRoadBlock_XPos_=0;
+    GridButton::firtsRoadBlock_YPos_=0;
+    GridButton::lastRoadBlock_XPos_=0;
+    GridButton::lastRoadBlock_YPos_=0;
+    GridButton::drawRoadBlocks_=false;
+    GridButton::totalRoadBlockCount_=0;
+    GridButton::Start_={0,0};
+    GridButton::Finish_={0,0};
+
+    //resetting all the nodes in 2D grid
+    for(int i = 0; i < raw_ ; i++){
+        for(int j = 0 ; j<clm_; j++){
+            TwoDGridOfButtons_[i][j]->DistFromStart_=0;
+            TwoDGridOfButtons_[i][j]->TotalDistance_=0;
+            TwoDGridOfButtons_[i][j]->ItsHome_ = false;
+            TwoDGridOfButtons_[i][j]->ItsVisited_ = false;
+            TwoDGridOfButtons_[i][j]->ItsABlock_ =false;
+            TwoDGridOfButtons_[i][j]->ItsAStart_ = false;
+            TwoDGridOfButtons_[i][j]->ItsAFinish_=false;
+            TwoDGridOfButtons_[i][j]->ButtonVar_->setStyleSheet("background-color : whitesmoke");
+        }
+    }
+
+    //clear all the Window object variables
+    OpenNodes_.clear();
 }
