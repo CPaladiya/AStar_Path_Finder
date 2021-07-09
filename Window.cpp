@@ -73,8 +73,8 @@ void Window::DrawMainWindow(){
 }
 
 //---------------------------adding delay anywhere we need to avoid data race-----------------------//
-void Window::addDelay(){
-    QTime dieTime= QTime::currentTime().addMSecs(50);
+void Window::addDelay(int n){
+    QTime dieTime= QTime::currentTime().addMSecs(n);
     while (QTime::currentTime() < dieTime)
         {QCoreApplication::processEvents(QEventLoop::AllEvents, 50);};
 }
@@ -83,7 +83,7 @@ void Window::addDelay(){
 // This function will draw blocks between two selected points and make sure that it does not increase
 //beyond total block number of 100
 void Window::RunLoopToDrawBlocks_(){
-    addDelay();//add delay to make sure that the static variable drawRoadBlocks_ is available
+    addDelay(50);//add delay to make sure that the static variable drawRoadBlocks_ is available
     //first checking the permission to drawing road blocks is given
     if(GridButton::drawRoadBlocks_ == true){
         cout<<GridButton::ClickUseCount_<<endl;

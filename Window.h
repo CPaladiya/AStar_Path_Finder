@@ -59,7 +59,7 @@ public:
     void DrawMainWindow();
     void HideResetButton_();
     void ShowResetButton_();
-    void addDelay();
+    void addDelay(int n);
     void RunLoopToDrawBlocks_();
 
 

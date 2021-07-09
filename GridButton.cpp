@@ -24,8 +24,22 @@ GridButton::GridButton(int X, int Y, QWidget *parent)
 GridButton::~GridButton(){
 }
 
-void GridButton::setOrageColor(){
-    ButtonVar_->setStyleSheet("background-color : orange");
+void GridButton::setExplorerColor(){
+    if(ItsAFinish_==false && ItsAStart_ ==false){
+        ButtonVar_->setStyleSheet("background-color : coral");
+    }
+}
+
+void GridButton::setNeighborColor(){
+    if(ItsAFinish_==false && ItsAStart_ ==false){
+        ButtonVar_->setStyleSheet("background-color : burlywood");
+    }
+}
+
+void GridButton::setFinalPathColor(){
+    if(ItsAFinish_==false && ItsAStart_ ==false){
+        ButtonVar_->setStyleSheet("background-color : purple");
+    }
 }
 
 void GridButton::setColorAndGetCoOrd(){
@@ -33,10 +47,12 @@ void GridButton::setColorAndGetCoOrd(){
         ButtonVar_->setStyleSheet("background-color : black");
         firtsRoadBlock_XPos_ = x_GridPos_;
         firtsRoadBlock_YPos_ = y_GridPos_;
+        ItsABlock_=true;
         ClickUseCount_++;
     }
     else if(ClickUseCount_>1 && ClickUseCount_%2==1 && totalRoadBlockCount_<99){
         QMutexLocker locker_(&mutex_);
+        ItsABlock_=true;
         drawRoadBlocks_ = true;
         lastRoadBlock_XPos_ = x_GridPos_;
         lastRoadBlock_YPos_ = y_GridPos_;
@@ -51,7 +67,7 @@ void GridButton::setColorAndGetCoOrd(){
         ClickUseCount_++;
     }
     else if(ClickUseCount_==1){
-        ButtonVar_->setStyleSheet("background-color : red");
+        ButtonVar_->setStyleSheet("background-color : maroon");
         ItsAFinish_=true;
         Finish_[0]=x_GridPos_;
         Finish_[1]=y_GridPos_;

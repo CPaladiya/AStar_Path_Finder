@@ -24,22 +24,30 @@ void Window::AddNeighbors(vector<vector<float>> &openGrid, const vector<float> &
     for(int i=0; i<8; i++){
         int Xn = x + NeighborAddress[i][0];
         int Yn = y + NeighborAddress[i][1];
-        //now checking if the new Xn and Yn adress is valid and the grid does not have road block over there
-        bool XnISValid = Xn >= 0 && Xn < (int)TwoDGridOfButtons_.size();
-        bool YnISValid = Yn >= 0 && Yn < (int)TwoDGridOfButtons_.size();
-        bool XnYnIsOpenRoad = !(TwoDGridOfButtons_[Xn][Yn]->ItsABlock_);
-        bool XnYnNotVisitedAlready = !(TwoDGridOfButtons_[Xn][Yn]->ItsVisited_);
-        if(XnISValid && YnISValid && XnYnIsOpenRoad && XnYnNotVisitedAlready){
-            cout<<Xn<<Yn;
-            vector<float> temp{(float)Xn,(float)Yn};
-            TwoDGridOfButtons_[Xn][Yn]->parent_ = {x,y};  //setting the new neighbor as children
-            TwoDGridOfButtons_[Xn][Yn]->ItsVisited_ = true; //setting this new node as already visited
-            //g distance for neighbor Xn Yn is the distance already travelled plus distance between Xn Yn and parent x and y
-            TwoDGridOfButtons_[Xn][Yn]->DistFromStart_ = TwoDGridOfButtons_[x][y]->DistFromStart_+ Distance(Xn,x,Yn,y);
-            //f-distance for neighbor Xn Yn is distUp unitill now and direct distance between node and goal
-            TwoDGridOfButtons_[Xn][Yn]->TotalDistance_ = TwoDGridOfButtons_[Xn][Yn]->DistFromStart_ + Distance(Xn,Finish[0],Yn,Finish[1]);
-            temp.push_back(TwoDGridOfButtons_[Xn][Yn]->TotalDistance_);
-            openGrid.push_back(temp);
+        //now checking ifthe new Xn and Yn adress is valid and the grid does not have road block over there
+        bool XnISValid = (Xn >= 0 && Xn < (int)TwoDGridOfButtons_.size());
+        bool YnISValid = (Yn >= 0 && Yn < (int)TwoDGridOfButtons_[0].size());
+        if(XnISValid && YnISValid){
+            bool XnYnIsBlock = TwoDGridOfButtons_[Xn][Yn]->ItsABlock_;
+            bool XnYnVisitedAlready = TwoDGridOfButtons_[Xn][Yn]->ItsVisited_;
+            if( !XnYnIsBlock && !XnYnVisitedAlready){
+                cout<<"inside neighbor "<< Xn << " "<<Yn <<endl ;
+                cout<<"inside neighbor float "<< (float)Xn << " "<< (float)Yn <<endl ;
+                vector<float> temp{0,0};
+                temp[0] = (float)Xn;
+                temp[1] = (float)Yn;
+                
+                addDelay(50);
+                TwoDGridOfButtons_[Xn][Yn]->setNeighborColor();
+                TwoDGridOfButtons_[Xn][Yn]->parent_ = {x,y};  //setting the new neighbor as children
+                TwoDGridOfButtons_[Xn][Yn]->ItsVisited_ = true; //setting this new node as already visited
+                //g distance for neighbor Xn Yn is the distance already travelled plus distance between Xn Yn and parent x and y
+                TwoDGridOfButtons_[Xn][Yn]->DistFromStart_ = TwoDGridOfButtons_[x][y]->DistFromStart_+ Distance(Xn,x,Yn,y);
+                //f-distance for neighbor Xn Yn is distUp unitill now and direct distance between node and goal
+                TwoDGridOfButtons_[Xn][Yn]->TotalDistance_ = TwoDGridOfButtons_[Xn][Yn]->DistFromStart_ + Distance(Xn,Finish[0],Yn,Finish[1]);
+                temp.push_back(TwoDGridOfButtons_[Xn][Yn]->TotalDistance_);
+                openGrid.push_back(temp);
+            }
         }
     }
 };
@@ -53,6 +61,7 @@ void Window::AStarSearch() {
     vector<float> LN{0,0};
     LN[0] = (float)GridButton::Finish_[0]; //Last node
     LN[1] = (float)GridButton::Finish_[1];
+    cout<<"End Point "<<LN[0]<<" "<<LN[1]<<endl;
     
     TwoDGridOfButtons_[FN[0]][FN[1]]->DistFromStart_ = 0;
     
@@ -63,13 +72,17 @@ void Window::AStarSearch() {
         SortOpenNodes(OpenNodes_); //now that we have added the neighbors, we will sort the vector
         vector<float> currentNode_ = OpenNodes_.back(); //getting the cell with minimum TotalDistance
         OpenNodes_.pop_back(); //removing that cell from the open vectors
-        cout<<currentNode_[0] << " " <<LN[0]<<" " <<currentNode_[1]<<" " <<LN[1]<<endl;
+        cout<< "Neighbors "<<currentNode_[0] <<" " <<LN[0]<<" " <<currentNode_[1]<<" " <<LN[1]<<endl;
         if((int)currentNode_[0]== (int)LN[0] && (int)currentNode_[1]==(int)LN[1]){
+            cout<<"reached AStar break"<<endl;
             RegeneratePath();
             break;
         }
+        addDelay(50);
+        TwoDGridOfButtons_[(int)currentNode_[0]][(int)currentNode_[1]]->setExplorerColor();
         AddNeighbors(OpenNodes_,currentNode_,LN);
     }
+    cout<<"reached end of the loop"<<endl;
 }
 
 void Window::RegeneratePath(){
@@ -79,9 +92,11 @@ void Window::RegeneratePath(){
         int ParentX = TwoDGridOfButtons_[Cn[0]][Cn[1]]->parent_[0];
         int ParentY = TwoDGridOfButtons_[Cn[0]][Cn[1]]->parent_[1];
         if(TwoDGridOfButtons_[ParentX][ParentY]->ItsHome_==true){
+            cout<<"reached regenration break"<<endl;
             break;
         }
-        TwoDGridOfButtons_[ParentX][ParentY]->setOrageColor();
+        addDelay(100);
+        TwoDGridOfButtons_[ParentX][ParentY]->setFinalPathColor();
         Cn[0] = ParentX;
         Cn[1] = ParentY;
     }

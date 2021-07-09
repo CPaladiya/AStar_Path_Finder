@@ -26,7 +26,9 @@ public:
     ~GridButton(); 
 
     void setColorAndGetCoOrd();//setting the color of button based on how many clicks has occured
-    void setOrageColor();//setting orange color for final result
+    void setExplorerColor();//setting orange color for final result
+    void setNeighborColor();//setting silver color in all the expored points
+    void setFinalPathColor();//all the nodes that are added in neighbours
 
     vector<int> parent_; //link to the parent of the button
     //float HueDistToFinish_{0}; //h-score direct distance to finish point
