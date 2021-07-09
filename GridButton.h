@@ -32,6 +32,7 @@ public:
 
     vector<int> parent_; //link to the parent of the button
     //float HueDistToFinish_{0}; //h-score direct distance to finish point
+    int ButtonSize_{25}; //individual button size to control the grid
     float DistFromStart_{0}; //g-score so far distance from start
     float TotalDistance_{0}; //f-score = (g+h) total score
     bool ItsHome_{false}; //Variable used to identify home while regenerating path

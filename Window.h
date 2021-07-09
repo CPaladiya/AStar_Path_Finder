@@ -25,8 +25,9 @@ class Window : public QWidget{
 
     Q_OBJECT;
 
-    int raw_{20};
-    int clm_{30};
+    int raw_{20}; //number of raws in cell grid
+    int clm_{30}; //number of column in cell grid
+    int SimulationSpeed{15}; //in ms
 
 public:
 

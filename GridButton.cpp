@@ -15,7 +15,7 @@ vector<int> GridButton::Finish_{0,0};
 
 GridButton::GridButton(int X, int Y, QWidget *parent)
             : QPushButton(parent), x_GridPos_(X), y_GridPos_(Y){
-    const QSize FixedButtonSize = QSize(20,20); //fixing the button size
+    const QSize FixedButtonSize = QSize(ButtonSize_,ButtonSize_); //fixing the button size
     ButtonVar_ = new QPushButton();
     ButtonVar_->setFixedSize(FixedButtonSize);
     connect(ButtonVar_, &QPushButton::clicked, this, &GridButton::setColorAndGetCoOrd);

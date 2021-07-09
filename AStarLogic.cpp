@@ -37,7 +37,7 @@ void Window::AddNeighbors(vector<vector<float>> &openGrid, const vector<float> &
                 temp[0] = (float)Xn;
                 temp[1] = (float)Yn;
                 
-                addDelay(50);
+                addDelay(SimulationSpeed);
                 TwoDGridOfButtons_[Xn][Yn]->setNeighborColor();
                 TwoDGridOfButtons_[Xn][Yn]->parent_ = {x,y};  //setting the new neighbor as children
                 TwoDGridOfButtons_[Xn][Yn]->ItsVisited_ = true; //setting this new node as already visited
@@ -78,7 +78,7 @@ void Window::AStarSearch() {
             RegeneratePath();
             break;
         }
-        addDelay(50);
+        addDelay(SimulationSpeed);
         TwoDGridOfButtons_[(int)currentNode_[0]][(int)currentNode_[1]]->setExplorerColor();
         AddNeighbors(OpenNodes_,currentNode_,LN);
     }
@@ -95,7 +95,7 @@ void Window::RegeneratePath(){
             cout<<"reached regenration break"<<endl;
             break;
         }
-        addDelay(100);
+        addDelay(SimulationSpeed*1.5);
         TwoDGridOfButtons_[ParentX][ParentY]->setFinalPathColor();
         Cn[0] = ParentX;
         Cn[1] = ParentY;

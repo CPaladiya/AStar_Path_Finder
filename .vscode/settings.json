@@ -5,6 +5,7 @@
         "ostream": "cpp",
         "cmath": "cpp",
         "iostream": "cpp",
-        "qwidget": "cpp"
+        "qwidget": "cpp",
+        "qgridlayout": "cpp"
     }
 }
