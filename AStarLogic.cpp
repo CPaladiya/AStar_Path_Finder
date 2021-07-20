@@ -31,12 +31,9 @@ void Window::AddNeighbors(vector<vector<float>> &openGrid, const vector<float> &
             bool XnYnIsBlock = TwoDGridOfButtons_[Xn][Yn]->ItsABlock_;
             bool XnYnVisitedAlready = TwoDGridOfButtons_[Xn][Yn]->ItsVisited_;
             if( !XnYnIsBlock && !XnYnVisitedAlready){
-                cout<<"inside neighbor "<< Xn << " "<<Yn <<endl ;
-                cout<<"inside neighbor float "<< (float)Xn << " "<< (float)Yn <<endl ;
                 vector<float> temp{0,0};
                 temp[0] = (float)Xn;
                 temp[1] = (float)Yn;
-                
                 addDelay(SimulationSpeed);
                 TwoDGridOfButtons_[Xn][Yn]->setNeighborColor();
                 TwoDGridOfButtons_[Xn][Yn]->parent_ = {x,y};  //setting the new neighbor as children

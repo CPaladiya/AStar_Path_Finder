@@ -74,7 +74,6 @@ void Window::DrawMainWindow(){
 
     setLayout(MainWindowGrid_); //Addimg main grid to the window
     setWindowTitle(tr("LOS Algorithm"));
-    //resize(100,200);
 }
 
 //---------------------------adding delay-----------------------//

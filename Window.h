@@ -17,7 +17,8 @@
 using namespace std;
 
 /*class definition of Window object, the main object that will own all the other class objects
-and also, will populate the main window grid with required elements such as simulation and reset button*/
+and also, will populate the main window grid with required elements such as simulation and reset button.
+Also, it contains function declarations for AStarLogic functions*/
 
 class Window : public QWidget{
 

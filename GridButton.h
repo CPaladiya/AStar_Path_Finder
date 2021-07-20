@@ -15,7 +15,7 @@ using namespace std;
 
 //QTextStream out(stdout);
 /*This class is buttons in the main window acting as a 2D selectable
-pixel grid*/
+pixel grid. Buttons has property like is it home? ,start?, road block? , whats its position?, if its in the route what its score?*/
 
 class GridButton : public QPushButton{
     
