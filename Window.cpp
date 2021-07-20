@@ -37,11 +37,11 @@ void Window::Load2DButtonGrid(){
     for(int i = 0; i < raw_ ; i++){
         for(int j = 0 ; j<clm_; j++){
             GridButton* TempGridButtonObject = new GridButton(i,j);
-            TempRowVec.push_back(TempGridButtonObject);
+            TempRowVec.emplace_back(TempGridButtonObject);
             TwoDGridButtonGridLayout_->addWidget(TempGridButtonObject->ButtonVar_,i,j);
             connect(TempGridButtonObject->ButtonVar_,&QPushButton::clicked,this,&Window::RunLoopToDrawBlocks_);
         } 
-        TwoDGridOfButtons_.push_back(TempRowVec);
+        TwoDGridOfButtons_.emplace_back(TempRowVec);
         TempRowVec.clear();
     }
     TwoDGridButtonGridLayout_->setSpacing(0);
@@ -77,11 +77,11 @@ void Window::DrawMainWindow(){
     //resize(100,200);
 }
 
-//---------------------------adding delay anywhere we need to avoid data race-----------------------//
+//---------------------------adding delay-----------------------//
 void Window::addDelay(int n){
     QTime dieTime= QTime::currentTime().addMSecs(n);
     while (QTime::currentTime() < dieTime)
-        {QCoreApplication::processEvents(QEventLoop::AllEvents, 50);};
+        {QCoreApplication::processEvents(QEventLoop::AllEvents, n);};
 }
 
 //-------------------------Drawing road blocks between two selected buttons---------------------------//

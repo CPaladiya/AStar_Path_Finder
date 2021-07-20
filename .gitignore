@@ -2,3 +2,6 @@ moc*
 *.stash
 *.o
 Makefile
+.vscode/*
+.vscode
+15_LOS_Path_Finder

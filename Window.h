@@ -25,7 +25,7 @@ class Window : public QWidget{
 
     int raw_{20}; //number of raws in cell grid
     int clm_{30}; //number of column in cell grid
-    int SimulationSpeed{15}; //in ms
+    int SimulationSpeed{10}; //in ms
 
 public:
 
@@ -34,7 +34,7 @@ public:
 
     //we will use this array to calculate cost to neighbors and to add neighbors
     const float NeighborAddress[8][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {1, 1}, {-1, 1}, {-1, -1}, {1, -1}};
-    vector<vector<float>> OpenNodes_; //vector to store open nodes's indices 
+    vector<vector<float>> OpenNodes_; //vector to store open nodes's indices
     vector<vector<GridButton*>> TwoDGridOfButtons_; //vector to store pointer GridButton instances for 2D grid
     vector<vector<int>> ForwardResultVector_; //vector to store result in forward direction
     vector<vector<int>> ReverseResultVector_; //vector to store result in reverse direction
