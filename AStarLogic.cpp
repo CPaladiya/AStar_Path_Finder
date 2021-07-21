@@ -12,28 +12,28 @@ void Window::SortOpenNodes(vector<vector<float>> &OpenNodes){
 
 //calculating hueristic distance between two points
 float Window::Distance(int X1, int Y1, int X2, int Y2){
-    //cout<< sqrt((float)pow(abs(X1-Y1),2) + (float)pow(abs(X2-Y2),2))<<endl;
-    return sqrt((float)pow(abs(X1-Y1),2) + (float)pow(abs(X2-Y2),2));
+    //cout<< sqrt(static_cast<float>pow(abs(X1-Y1),2) + static_cast<float>pow(abs(X2-Y2),2))<<endl;
+    return sqrt(static_cast<float>(pow(abs(X1-Y1),2)) + static_cast<float>(pow(abs(X2-Y2),2)));
 }
 
 void Window::AddNeighbors(vector<vector<float>> &openGrid, const vector<float> &Node, const vector<float> &Finish){
-    int x = (int)Node[0];
-    int y = (int)Node[1];
+    int x = static_cast<int>(Node[0]);
+    int y = static_cast<int>(Node[1]);
     
     //adding all eight neigbors from the NeighborAddress array one by one
     for(int i=0; i<8; i++){
         int Xn = x + NeighborAddress[i][0];
         int Yn = y + NeighborAddress[i][1];
         //now checking ifthe new Xn and Yn adress is valid and the grid does not have road block over there
-        bool XnISValid = (Xn >= 0 && Xn < (int)TwoDGridOfButtons_.size());
-        bool YnISValid = (Yn >= 0 && Yn < (int)TwoDGridOfButtons_[0].size());
+        bool XnISValid = (Xn >= 0 && Xn < static_cast<int>(TwoDGridOfButtons_.size()));
+        bool YnISValid = (Yn >= 0 && Yn < static_cast<int>(TwoDGridOfButtons_[0].size()));
         if(XnISValid && YnISValid){
             bool XnYnIsBlock = TwoDGridOfButtons_[Xn][Yn]->ItsABlock_;
             bool XnYnVisitedAlready = TwoDGridOfButtons_[Xn][Yn]->ItsVisited_;
             if( !XnYnIsBlock && !XnYnVisitedAlready){
                 vector<float> temp{0,0};
-                temp[0] = (float)Xn;
-                temp[1] = (float)Yn;
+                temp[0] = static_cast<float>(Xn);
+                temp[1] = static_cast<float>(Yn);
                 addDelay(SimulationSpeed);
                 TwoDGridOfButtons_[Xn][Yn]->setNeighborColor();
                 TwoDGridOfButtons_[Xn][Yn]->parent_ = {x,y};  //setting the new neighbor as children
@@ -52,12 +52,12 @@ void Window::AddNeighbors(vector<vector<float>> &openGrid, const vector<float> &
 void Window::AStarSearch() {
     
     vector<float> FN{0,0}; 
-    FN[0] = (float)GridButton::Start_[0]; //First node
-    FN[1] = (float)GridButton::Start_[1]; 
+    FN[0] = static_cast<float>(GridButton::Start_[0]); //First node
+    FN[1] = static_cast<float>(GridButton::Start_[1]); 
     cout<<"Start Point "<<FN[0]<<" "<<FN[1]<<endl;
     vector<float> LN{0,0};
-    LN[0] = (float)GridButton::Finish_[0]; //Last node
-    LN[1] = (float)GridButton::Finish_[1];
+    LN[0] = static_cast<float>(GridButton::Finish_[0]); //Last node
+    LN[1] = static_cast<float>(GridButton::Finish_[1]);
     cout<<"End Point "<<LN[0]<<" "<<LN[1]<<endl;
     
     TwoDGridOfButtons_[FN[0]][FN[1]]->DistFromStart_ = 0;
@@ -70,13 +70,13 @@ void Window::AStarSearch() {
         vector<float> currentNode_ = OpenNodes_.back(); //getting the cell with minimum TotalDistance
         OpenNodes_.pop_back(); //removing that cell from the open vectors
         cout<< "Neighbors "<<currentNode_[0] <<" " <<LN[0]<<" " <<currentNode_[1]<<" " <<LN[1]<<endl;
-        if((int)currentNode_[0]== (int)LN[0] && (int)currentNode_[1]==(int)LN[1]){
+        if(static_cast<int>(currentNode_[0])== static_cast<int>(LN[0]) && static_cast<int>(currentNode_[1])==static_cast<int>(LN[1])){
             cout<<"reached AStar break"<<endl;
             RegeneratePath();
             break;
         }
         addDelay(SimulationSpeed);
-        TwoDGridOfButtons_[(int)currentNode_[0]][(int)currentNode_[1]]->setExplorerColor();
+        TwoDGridOfButtons_[static_cast<int>(currentNode_[0])][static_cast<int>(currentNode_[1])]->setExplorerColor();
         AddNeighbors(OpenNodes_,currentNode_,LN);
     }
     cout<<"reached end of the loop"<<endl;
@@ -107,7 +107,7 @@ void Window::RegeneratePath(){
     reverse(ForwardResultVector_.begin(), ForwardResultVector_.end());
 
     //next, we will simulate the Forward result vector to show the result on screen
-    for(int i=0; i<(int)ForwardResultVector_.size(); i++){
+    for(int i=0; i < static_cast<int>(ForwardResultVector_.size()); i++){
         addDelay(SimulationSpeed);
         TwoDGridOfButtons_[ForwardResultVector_[i][0]][ForwardResultVector_[i][1]]->setFinalPathColor();
     }
